@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>식인종 & 선교사 - Pixel Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- ── 헤더 ── -->
+  <header class="pixel-header">
+    <span class="title-text">⛵ MISSIONARY &amp; CANNIBAL</span>
+    <span class="turn-counter">TURN : <span id="turn-num">0</span></span>
+  </header>
+
+  <!-- ── 메인 게임 화면 ── -->
+  <main class="game-wrap">
+
+    <!-- 왼쪽 강가 -->
+    <section class="bank" id="bank-left">
+      <div class="bank-label">LEFT BANK</div>
+      <div class="char-area" id="chars-left"></div>
+      <div class="bank-count">
+        <span>🟦 M : <b id="left-m">3</b></span>
+        <span>🟥 C : <b id="left-c">3</b></span>
+      </div>
+    </section>
+
+    <!-- 강 + 배 -->
+    <section class="river-area">
+      <div class="river-bg">
+        <div class="wave"></div>
+        <div class="wave wave2"></div>
+      </div>
+      <!-- 배 (배 위치에 따라 left/right 클래스 전환) -->
+      <div class="boat-wrap" id="boat-wrap">
+        <div class="boat-passengers" id="boat-passengers"></div>
+        <div class="pixel-boat">⛵</div>
+        <div class="boat-label" id="boat-label">◀ BOAT</div>
+      </div>
+    </section>
+
+    <!-- 오른쪽 강가 -->
+    <section class="bank" id="bank-right">
+      <div class="bank-label">RIGHT BANK</div>
+      <div class="char-area" id="chars-right"></div>
+      <div class="bank-count">
+        <span>🟦 M : <b id="right-m">0</b></span>
+        <span>🟥 C : <b id="right-c">0</b></span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── 로그 패널 ── -->
+  <div class="log-panel">
+    <div class="log-title">📟 GM LOG</div>
+    <div class="log-body" id="log-body">
+      <p class="log-line system">[ GAME READY ] START 버튼을 눌러 게임을 시작하세요.</p>
+    </div>
+  </div>
+
+  <!-- ── 컨트롤 패널 ── -->
+  <div class="control-panel">
+
+    <!-- 모드 선택 -->
+    <div class="mode-wrap">
+      <button class="pixel-btn mode-btn active" id="btn-ai"   onclick="setMode('ai')">🤖 AI 자동</button>
+      <button class="pixel-btn mode-btn"        id="btn-manual" onclick="setMode('manual')">🎮 수동</button>
+    </div>
+
+    <!-- 게임 시작 / 리셋 -->
+    <div class="start-wrap">
+      <button class="pixel-btn green" id="btn-start" onclick="startGame()">▶ START</button>
+      <button class="pixel-btn red"   id="btn-reset" onclick="resetGame()" disabled>↺ RESET</button>
+    </div>
+
+    <!-- AI 자동 모드 버튼 -->
+    <div id="ai-controls">
+      <button class="pixel-btn yellow" id="btn-next" onclick="aiTurn()" disabled>⚡ NEXT TURN</button>
+      <button class="pixel-btn yellow" id="btn-auto" onclick="autoPlay()" disabled>⏩ AUTO PLAY</button>
+    </div>
+
+    <!-- 수동 모드 커맨드 버튼 -->
+    <div id="manual-controls" class="hidden">
+      <div class="cmd-label">COMMAND SELECT :</div>
+      <div class="cmd-btns" id="cmd-btns"></div>
+    </div>
+
+  </div>
+
+  <!-- ── 과제/플레이 가이드 ── -->
+  <section class="guide-panel" aria-label="게임 방법과 AI 활용 설명">
+    <article class="guide-block mission">
+      <div class="guide-title">MISSION</div>
+      <p>왼쪽의 선교사 3명과 식인종 3명을 모두 오른쪽 강가로 이동시키세요.</p>
+      <p>배는 한 번에 1명 또는 2명만 태울 수 있고, 배가 있는 쪽 인원만 이동할 수 있습니다.</p>
+      <p class="danger-rule">어느 강가든 선교사가 1명 이상일 때 식인종이 더 많으면 GAME OVER.</p>
+    </article>
+
+    <article class="guide-block ai-mode">
+      <div class="guide-title">AI MODE</div>
+      <p><b>AI 자동</b>을 선택한 뒤 START를 누르세요.</p>
+      <p><b>NEXT TURN</b>은 AI가 한 턴씩 해결하고, <b>AUTO PLAY</b>는 끝까지 자동 진행합니다.</p>
+      <p>게임 엔진이 안전한 다음 수를 탐색하고, LLM GM이 턴별 상황을 해설합니다.</p>
+    </article>
+
+    <article class="guide-block manual-mode">
+      <div class="guide-title">MANUAL MODE</div>
+      <p><b>수동</b>을 선택하면 가능한 COMMAND 버튼이 활성화됩니다.</p>
+      <p>M은 선교사, C는 식인종입니다. 버튼을 눌러 현재 배가 있는 쪽에서 반대편으로 이동합니다.</p>
+      <p>막히면 AI 모드로 전환해 다음 수를 비교하면서 풀이 과정을 확인하세요.</p>
+    </article>
+
+  </section>
+
+  <!-- ── 결과 오버레이 ── -->
+  <div class="overlay hidden" id="overlay">
+    <div class="overlay-box">
+      <div class="overlay-icon" id="overlay-icon"></div>
+      <div class="overlay-msg"  id="overlay-msg"></div>
+      <button class="pixel-btn green" onclick="resetGame()">↺ PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <script src="/static/js/game.js"></script>
+</body>
+</html>

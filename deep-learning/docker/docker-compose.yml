@@ -1,0 +1,92 @@
+services:
+  flask-api-basic:
+    build:
+      context: ..
+      dockerfile: docker/flask-api-basic.Dockerfile
+    container_name: ml_dl_flask_api_basic
+    working_dir: /workspace/deep-learning/class-code/flask-api-basic
+    volumes:
+      - ..:/workspace/deep-learning
+    ports:
+      - "5000:5000"
+
+  docker-flask-basics:
+    build:
+      context: ..
+      dockerfile: docker/docker-flask-basics.Dockerfile
+    container_name: ml_dl_docker_flask_basics
+    profiles: ["examples"]
+    working_dir: /workspace/deep-learning/class-code/docker-flask-basics/chapter02/flaskserver
+    volumes:
+      - ..:/workspace/deep-learning
+    ports:
+      - "5004:5000"
+
+  flask-web-0422:
+    build:
+      context: ..
+      dockerfile: docker/flask-web-0422.Dockerfile
+    container_name: ml_dl_flask_web_0422
+    profiles: ["examples"]
+    working_dir: /workspace/deep-learning/class-code/flask-web/0422
+    volumes:
+      - ..:/workspace/deep-learning
+    ports:
+      - "5003:5000"
+
+  local-llm-examples:
+    build:
+      context: ..
+      dockerfile: docker/local-llm.Dockerfile
+    container_name: ml_dl_local_llm_examples
+    profiles: ["examples"]
+    working_dir: /workspace/deep-learning/class-code/local-llm
+    volumes:
+      - ..:/workspace/deep-learning
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+
+  langchain-basic:
+    build:
+      context: ..
+      dockerfile: docker/langchain-basic.Dockerfile
+    container_name: ml_dl_langchain_basic
+    profiles: ["examples"]
+    working_dir: /workspace/deep-learning/class-code/langchain-basic
+    volumes:
+      - ..:/workspace/deep-learning
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+
+  langchain-memory-basic:
+    build:
+      context: ..
+      dockerfile: docker/langchain-memory-basic.Dockerfile
+    container_name: ml_dl_langchain_memory_basic
+    profiles: ["examples"]
+    working_dir: /workspace/deep-learning/class-code/langchain-memory-basic
+    volumes:
+      - ..:/workspace/deep-learning
+
+  comfyui-basic:
+    build:
+      context: ..
+      dockerfile: docker/comfyui-basic.Dockerfile
+    container_name: ml_dl_comfyui_basic
+    profiles: ["examples"]
+    working_dir: /workspace/deep-learning/class-code/comfyui-basic
+    volumes:
+      - ..:/workspace/deep-learning
+    environment:
+      - COMFYUI_BASE_URL=http://host.docker.internal:8188
+
+  time-series:
+    build:
+      context: ..
+      dockerfile: docker/time-series.Dockerfile
+    container_name: ml_dl_time_series
+    working_dir: /workspace/deep-learning/class-code/time-series
+    volumes:
+      - ..:/workspace/deep-learning
+    ports:
+      - "8890:8890"

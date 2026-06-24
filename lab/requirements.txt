@@ -1,0 +1,34 @@
+# =============================================
+# 전체 프로젝트 통합 패키지 목록
+# =============================================
+
+# --- 웹 프레임워크 ---
+flask==3.1.0
+flask-cors==5.0.0
+
+# --- LangChain (DL텀프로젝트 조건: 0.3.17 고정) ---
+langchain==0.3.17
+langchain-core==0.3.52
+langchain-ollama==0.3.2
+langchain-community==0.3.15
+
+# --- HTTP 클라이언트 (ComfyUI API 호출용) ---
+requests==2.32.3
+websocket-client==1.8.0
+
+# --- ML 기초 텀프로젝트용 ---
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.2
+matplotlib==3.9.2
+seaborn==0.13.2
+joblib==1.4.2
+
+# --- Jupyter (ML 텀프로젝트 노트북) ---
+jupyter==1.1.1
+notebook==7.3.2
+ipykernel==6.29.5
+
+# --- 기타 유틸 ---
+python-dotenv==1.0.1
+gunicorn==23.0.0

@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+patsy
+joblib
+flask
+requests
+jupyter
+langchain-core
+langchain-ollama

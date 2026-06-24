@@ -1,0 +1,110 @@
+services:
+  ml-assignments:
+    build:
+      context: ..
+      dockerfile: docker/ml-assignments.Dockerfile
+    container_name: ml_dl_ml_assignments
+    profiles: ["examples"]
+    working_dir: /workspace/lab/machine-learning/assignments
+    volumes:
+      - ..:/workspace/lab
+    ports:
+      - "8891:8891"
+
+  ml-breast-cancer-flask:
+    build:
+      context: ..
+      dockerfile: docker/ml-breast-cancer-flask.Dockerfile
+    container_name: ml_dl_breast_cancer_flask
+    working_dir: /workspace/lab/machine-learning/assignments/04-breast-cancer-flask
+    volumes:
+      - ..:/workspace/lab
+    ports:
+      - "5001:5000"
+
+  ml-gas-term:
+    build:
+      context: ..
+      dockerfile: docker/ml-gas-term.Dockerfile
+    container_name: ml_dl_gas_term
+    working_dir: /workspace/lab/machine-learning/term-projects/gas-leak-prediction
+    volumes:
+      - ..:/workspace/lab
+    environment:
+      - GAS_LEAK_DATASET_DIR=/workspace/lab/datasets/gas-leak-sample
+    ports:
+      - "8889:8889"
+
+  dl1-mc-game:
+    build:
+      context: ..
+      dockerfile: docker/dl1-mc-game.Dockerfile
+    container_name: ml_dl_dl1_mc_game
+    working_dir: /workspace/lab/deep-learning/assignments/01-missionaries-cannibals-gm
+    volumes:
+      - ..:/workspace/lab
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - OLLAMA_MODEL=gemma4:e2b
+      - PORT=5101
+    ports:
+      - "5101:5101"
+
+  dl2-comfyui-translate:
+    build:
+      context: ..
+      dockerfile: docker/dl2-comfyui-translate.Dockerfile
+    container_name: ml_dl_dl2_comfyui_translate
+    working_dir: /workspace/lab/deep-learning/assignments/02-comfyui-translate-image
+    volumes:
+      - ..:/workspace/lab
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - COMFYUI_BASE_URL=http://host.docker.internal:8188
+      - OLLAMA_MODEL=gemma4:e2b
+      - PORT=5102
+    ports:
+      - "5102:5102"
+
+  dl3-cookie-sse-chat:
+    build:
+      context: ..
+      dockerfile: docker/dl3-cookie-sse-chat.Dockerfile
+    container_name: ml_dl_dl3_cookie_sse_chat
+    working_dir: /workspace/lab/deep-learning/assignments/03-cookie-sse-chat
+    volumes:
+      - ..:/workspace/lab
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - OLLAMA_MODEL=gemma4:e2b
+      - PORT=5103
+    ports:
+      - "5103:5103"
+
+  dl-term-chat-image:
+    build:
+      context: ..
+      dockerfile: docker/dl-term-chat-image.Dockerfile
+    container_name: ml_dl_dl_term_chat_image
+    working_dir: /workspace/lab/deep-learning/term-projects/chat-image-generator
+    volumes:
+      - ..:/workspace/lab
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - COMFYUI_BASE_URL=http://host.docker.internal:8188
+      - OLLAMA_MODEL=gemma4:e2b
+      - PORT=5104
+    ports:
+      - "5104:5104"
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ml_dl_ollama
+    profiles: ["llm"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:

@@ -1,0 +1,11 @@
+services:
+  machine-learning:
+    build:
+      context: ..
+      dockerfile: docker/machine-learning.Dockerfile
+    container_name: ml_dl_machine_learning
+    working_dir: /workspace/machine-learning
+    volumes:
+      - ..:/workspace/machine-learning
+    ports:
+      - "8888:8888"

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Canvas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Black+Han+Sans&family=Do+Hyeon&family=Jua&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css?v=20260617-breaker3">
+</head>
+<body>
+  <div class="opening-gate" id="opening-gate" aria-label="Prompt Canvas 진입 화면">
+    <canvas class="lightning-field gate-lightning" id="gate-lightning" aria-hidden="true"></canvas>
+    <div class="gate-noise" aria-hidden="true"></div>
+    <div class="gate-shock" aria-hidden="true"></div>
+    <div class="gate-object-cloud" aria-hidden="true">
+      <span class="gate-sticker gate-sticker-a"></span>
+      <span class="gate-sticker gate-sticker-b"></span>
+      <span class="gate-sticker gate-sticker-c"></span>
+      <span class="gate-sticker gate-sticker-d"></span>
+      <span class="gate-sticker gate-sticker-e"></span>
+      <span class="gate-sticker gate-sticker-f"></span>
+      <span class="gate-sticker gate-sticker-g"></span>
+      <span class="gate-sticker gate-sticker-h"></span>
+    </div>
+    <div class="gate-frame" aria-hidden="true"></div>
+    <div class="gate-copy">
+      <p class="kicker">RED BREAKER / IMAGE ENGINE</p>
+      <h1 class="gate-title" aria-label="Prompt Breaker">
+        <span>P</span><span>R</span><span>O</span><span>M</span><span>P</span><span>T</span>
+        <br>
+        <span>B</span><span>R</span><span>E</span><span>A</span><span>K</span><span>E</span><span>R</span>
+      </h1>
+      <p class="gate-sub">PROMPT TO IMAGE / RED ENGINE / COMFYUI LIVE</p>
+      <button class="gate-button" id="enter-studio" type="button">Enter Studio</button>
+    </div>
+  </div>
+
+  <main class="chat-page">
+    <canvas class="motion-field" id="motion-field" aria-hidden="true"></canvas>
+    <canvas class="lightning-field scene-lightning" id="scene-lightning" aria-hidden="true"></canvas>
+    <div class="red-burst" aria-hidden="true"></div>
+    <div class="noise-illustration" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="stage-sticker-layer" aria-hidden="true">
+      <span class="stage-sticker sticker-ring"></span>
+      <span class="stage-sticker sticker-bolt"></span>
+      <span class="stage-sticker sticker-flame"></span>
+      <span class="stage-sticker sticker-spark"></span>
+      <span class="stage-sticker sticker-chain"></span>
+    </div>
+
+    <button class="side-tab" id="side-toggle" type="button" aria-controls="side-drawer" aria-expanded="false">SETUP</button>
+
+    <aside class="side-drawer" id="side-drawer" aria-label="이미지 생성 설정">
+      <div class="drawer-panel">
+        <div class="drawer-head">
+          <div>
+            <p class="kicker">Runtime Console</p>
+            <h2>Studio Setup</h2>
+          </div>
+          <button class="icon-button" id="side-close" type="button" aria-label="설정 닫기">×</button>
+        </div>
+
+        <section class="drawer-section">
+          <h3>Runtime</h3>
+          <dl class="status-list">
+            <div><dt>Ollama</dt><dd id="ollama-status">{{ active_model }}</dd></div>
+            <div><dt>ComfyUI</dt><dd id="comfy-status">checking</dd></div>
+            <div><dt>LangChain</dt><dd>0.3.17</dd></div>
+            <div><dt>Port</dt><dd>5104</dd></div>
+          </dl>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Image Settings</h3>
+          <label class="field">
+            <span>Negative prompt</span>
+            <textarea id="negative-input" rows="4">{{ default_negative }}</textarea>
+          </label>
+
+          <div class="settings-grid">
+            <label class="field"><span>Width</span><select id="width-input"><option value="512" selected>512</option><option value="640">640</option><option value="768">768</option></select></label>
+            <label class="field"><span>Height</span><select id="height-input"><option value="512" selected>512</option><option value="640">640</option><option value="768">768</option></select></label>
+            <label class="field"><span>Steps</span><input id="steps-input" type="number" min="8" max="40" value="20"></label>
+            <label class="field"><span>CFG</span><input id="cfg-input" type="number" min="1" max="12" step="0.5" value="7"></label>
+          </div>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Quick Prompts</h3>
+          <button class="prompt-chip" type="button" data-prompt="비 오는 밤 골목길에서 계산기를 든 고양이 탐정, 네온비, 시네마틱 조명, 몽환적인 일러스트">네온 탐정 장면</button>
+          <button class="prompt-chip" type="button" data-prompt="유리 실험실 안의 미래 카페, 초록 색감과 투명한 의자, 제품 사진처럼 선명한 조명, 미니멀한 구도">미래 실험실 카페</button>
+          <button class="prompt-chip" type="button" data-prompt="바닷가 절벽 위 작은 기차, 구름 사이로 쏟아지는 빛, 수채화 스타일, 평화로운 분위기">수채화 절벽 기차</button>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Actions</h3>
+          <button id="clear-btn" class="drawer-action danger" type="button">대화 초기화</button>
+        </section>
+      </div>
+    </aside>
+
+    <div class="drawer-backdrop hidden" id="drawer-backdrop"></div>
+
+    <header class="chat-header">
+      <div class="brand-lockup">
+        <span class="brand-mark">PC</span>
+        <div>
+          <p class="kicker">LangChain · Ollama · ComfyUI</p>
+          <h1>Prompt Canvas</h1>
+        </div>
+      </div>
+      <div class="chat-meta">
+        <span id="model-badge">model : {{ active_model }}</span>
+      </div>
+    </header>
+
+    <section class="stage-hero" aria-label="생성 스튜디오">
+      <div class="hero-copy">
+        <p class="way-label">WAY_02</p>
+        <h2><span>Image</span><span>Breaker</span></h2>
+        <p>PROMPT TO IMAGE / RED ENGINE / COMFYUI LIVE</p>
+      </div>
+
+      <section class="visual-engine noise-border" aria-label="이미지 생성 결과">
+        <div class="engine-topline">
+          <span>LIVE PREVIEW / 3D MODE</span>
+          <div id="result-meta" class="result-meta hidden">
+            <span>Prompt ID</span>
+            <strong id="prompt-id"></strong>
+          </div>
+          <button id="download-btn" class="download-button hidden" type="button">Download</button>
+        </div>
+
+        <div class="image-frame">
+          <div class="orbital-stage" id="orbital-stage" aria-hidden="true">
+            <span class="toy toy-a toy-eye"></span>
+            <span class="toy toy-b toy-fire"></span>
+            <span class="toy toy-c toy-bolt"></span>
+            <span class="toy toy-d toy-star"></span>
+            <span class="toy toy-e toy-ring"></span>
+            <span class="toy toy-f toy-pill"></span>
+            <span class="toy toy-g toy-drop"></span>
+          </div>
+          <div class="scanline" aria-hidden="true"></div>
+          <div id="image-empty" class="image-empty">
+            <span>ComfyUI</span>
+            <p>프롬프트를 구체화한 뒤 그림생성 버튼을 누르세요</p>
+          </div>
+          <img id="result-img" class="hidden" alt="ComfyUI 생성 이미지">
+        </div>
+      </section>
+    </section>
+
+    <section class="studio-layout">
+      <section class="panel chat-card" aria-label="이미지 요구사항 대화">
+        <div class="card-head">
+          <div>
+            <p class="kicker">Conversation</p>
+            <h2>Scene Input</h2>
+          </div>
+          <span id="prompt-state" class="state-pill">{{ "준비됨" if current_prompt else "비어 있음" }}</span>
+        </div>
+
+        <div id="chat-log" class="chat-log">
+          {% if not messages %}
+            <article class="bubble assistant">
+              <div class="bubble-inner">원하는 이미지의 주제, 분위기, 색감, 질감, 카메라 구도 등을 입력하면 최종 이미지 프롬프트로 정리합니다.</div>
+            </article>
+          {% endif %}
+          {% for msg in messages %}
+            <article class="bubble {{ 'user' if msg.role == 'user' else 'assistant' }}">
+              <div class="bubble-inner">{{ msg.content }}</div>
+            </article>
+          {% endfor %}
+        </div>
+
+        <form id="chat-form" class="composer" autocomplete="off">
+          <textarea id="message-input" rows="3" placeholder="예: 비 오는 골목, 붉은 우산, 시네마틱 포스터, 강한 네온, 반짝이는 3D 스티커"></textarea>
+          <button id="send-btn" type="submit">Send</button>
+        </form>
+      </section>
+
+      <section class="prompt-column" aria-label="현재 프롬프트와 생성 이력">
+        <div class="panel prompt-card">
+          <div class="card-head compact">
+          <div>
+            <p class="kicker">Current Prompt</p>
+            <h2>Prompt Output</h2>
+          </div>
+          <button id="generate-btn-inline" class="generate-button" type="button">그림생성</button>
+        </div>
+          <p id="current-prompt">{{ current_prompt or "아직 프롬프트가 없습니다." }}</p>
+        </div>
+
+        <div class="history-row panel">
+          <span>최근 생성 이미지</span>
+          <div id="image-history" class="image-history">
+            {% for image in images %}
+              <button class="history-thumb" type="button" data-url="{{ image.image_url }}">
+                <img src="{{ image.image_url }}" alt="최근 생성 이미지">
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <div id="toast" class="toast hidden">처리 중입니다.</div>
+  </main>
+
+  <svg class="liquid-filter" width="0" height="0" focusable="false" aria-hidden="true">
+    <filter id="lg-dist" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+      <feGaussianBlur in="noise" stdDeviation="2" result="blurred" />
+      <feDisplacementMap in="SourceGraphic" in2="blurred" scale="70" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  <script src="/static/js/app.js?v=20260622-image-proxy"></script>
+</body>
+</html>

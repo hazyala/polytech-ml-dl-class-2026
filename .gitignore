@@ -1,0 +1,33 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Generated outputs
+output/
+tmp/
+logs/
+*.log
+
+# Large local data and model artifacts
+dataset/
+comfyui_data/
+*.keras
+*.h5
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+*.onnx
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Codex/local agent metadata
+.agents/
+.codex/

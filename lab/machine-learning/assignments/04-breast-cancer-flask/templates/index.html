@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유방암 진단 인공지능 서비스</title>
+    <style>
+        /* 기본 스타일: 전체 배경 및 글꼴 설정 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* 메인 컨테이너: 흰색 박스 스타일 */
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* 제목 스타일 */
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        /* 입력 폼 스타일 */
+        form {
+            text-align: left;
+        }
+
+        /* 입력 필드 레이블 스타일 */
+        p {
+            margin: 0 0 15px 0;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* 입력 창 스타일: 테두리 및 그림자 효과 */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box; /* 패딩 포함 크기 조절 */
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        /* 입력 창 선택 시 테두리 색상 변경 */
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* '진단하기' 버튼 스타일: 파란색 배경 및 호버 효과 */
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        /* 버튼 위에 마우스를 올렸을 때 색상 변경 */
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 결과 표시 영역 스타일 */
+        .result-area {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        /* 결과 제목 스타일 */
+        .result-title {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* 실제 결과 텍스트 스타일: 강조 */
+        .result-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #dc3545; /* 기본은 경고 색상(악성 대비) */
+        }
+
+        /* '양성' 결과일 때 색상 변경 (Flask에서 클래스 주입 필요) */
+        .result-text.benign {
+            color: #28a745; /* 안전 색상 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>유방암 진단 AI</h1>
+        
+        <form action="/predict" method="post">
+            <p>평균 반지름: <input type="text" name="v1" placeholder="예: 17.99" required></p>
+            <p>평균 질감: <input type="text" name="v2" placeholder="예: 10.38" required></p>
+            
+            <button type="submit">진단 시작하기</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result-area">
+                <div class="result-title">진단 결과</div>
+                <div class="result-text {% if '양성' in prediction_text %}benign{% endif %}">
+                    {{ prediction_text }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

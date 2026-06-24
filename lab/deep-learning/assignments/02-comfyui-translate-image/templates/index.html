@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Muse</title>
+  <link rel="stylesheet" href="/static/css/style.css?v=20260617-layout2">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark"></span>
+      Image Muse
+    </a>
+    <nav class="top-nav" aria-label="service status">
+      <span id="comfy-status" class="status-pill pending">Image model</span>
+      <span id="ollama-status" class="status-pill pending">Prompt AI</span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Korean to image</p>
+        <h1>말로 그리는<br>이미지 생성 챗봇.</h1>
+        <p class="hero-text">
+          한국어로 원하는 장면을 적으면 AI가 영어 이미지 프롬프트로 다듬고,
+          로컬 ComfyUI가 바로 이미지를 생성합니다.
+        </p>
+      </div>
+      <div class="hero-card">
+        <div class="floating-preview">
+          <span></span>
+          <strong>Local AI Studio</strong>
+          <p>Ollama translation · ComfyUI generation</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="studio-layout">
+      <section class="chat-panel" aria-label="image prompt chatbot">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">Create</p>
+            <h2>이미지 생성 챗</h2>
+          </div>
+          <button id="btn-translate" class="text-button" type="button">번역만 보기</button>
+        </div>
+
+        <div class="message-list">
+          <article class="message assistant">
+            <span class="avatar">AI</span>
+            <div>
+              <p>어떤 장면을 만들까요?</p>
+              <small>인물, 풍경, 제품 사진, 일러스트 스타일 모두 괜찮아요.</small>
+            </div>
+          </article>
+          <article class="message system">
+            <span class="avatar">EN</span>
+            <div>
+              <p id="eng-preview">영어 프롬프트가 여기에 표시됩니다.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="prompt-suggestions">
+          <button class="prompt-chip" type="button">비 오는 밤 서울 골목의 네온사인, 영화 같은 분위기</button>
+          <button class="prompt-chip" type="button">투명한 유리 온실 안의 미래형 카페, 미니멀 제품 사진</button>
+          <button class="prompt-chip" type="button">달빛 아래 호수 위를 걷는 작은 로봇, 감성 일러스트</button>
+        </div>
+
+        <label class="composer">
+          <span>한국어 프롬프트</span>
+          <textarea id="korean-input" rows="5" placeholder="예: 노을이 지는 바닷가에서 빛나는 유리 성을 바라보는 고양이 탐험가"></textarea>
+        </label>
+
+        <div class="composer-actions">
+          <button id="btn-generate" class="primary-button" type="button">이미지 생성</button>
+        </div>
+
+        <details class="advanced-settings">
+          <summary>세부 설정</summary>
+          <label>
+            <span>Negative prompt</span>
+            <textarea id="neg-input" rows="3">{{ default_negative }}</textarea>
+          </label>
+          <div class="settings-grid">
+            <label>
+              <span>Width</span>
+              <select id="width-input">
+                <option value="512" selected>512</option>
+                <option value="640">640</option>
+                <option value="768">768</option>
+              </select>
+            </label>
+            <label>
+              <span>Height</span>
+              <select id="height-input">
+                <option value="512" selected>512</option>
+                <option value="640">640</option>
+                <option value="768">768</option>
+              </select>
+            </label>
+            <label>
+              <span>Steps</span>
+              <input id="steps-input" type="number" min="8" max="40" value="20">
+            </label>
+            <label>
+              <span>CFG</span>
+              <input id="cfg-input" type="number" min="1" max="12" step="0.5" value="7">
+            </label>
+          </div>
+        </details>
+
+        <div class="status-card">
+          <strong id="status-title">준비됨</strong>
+          <p id="status-text">프롬프트를 입력하면 AI가 생성용 영어 문장으로 바꿔줍니다.</p>
+          <div id="progress-track" class="progress-track hidden">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-panel" aria-label="generated image result">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">Preview</p>
+            <h2>생성 이미지</h2>
+          </div>
+          <a id="download-link" class="text-button hidden" href="#" download>이미지 열기</a>
+        </div>
+
+        <div id="image-frame" class="image-frame">
+          <div id="image-empty" class="image-empty">
+            <span>Image Muse</span>
+            <p>생성된 이미지가 이곳에 나타납니다.</p>
+          </div>
+          <img id="result-img" class="hidden" alt="ComfyUI 생성 이미지">
+        </div>
+
+        <div id="result-info" class="result-info hidden">
+          <div>
+            <span>Prompt ID</span>
+            <strong id="info-id"></strong>
+          </div>
+          <div>
+            <span>입력</span>
+            <p id="info-kor"></p>
+          </div>
+          <div>
+            <span>영문 프롬프트</span>
+            <p id="info-eng"></p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="pipeline">
+      <div>
+        <p class="eyebrow">How it works</p>
+        <h2>로컬에서 끝나는 생성 흐름</h2>
+      </div>
+      <div class="flow-list">
+        <div id="flow-input" class="flow-step active"><span>1</span>한국어 입력</div>
+        <div id="flow-translate" class="flow-step"><span>2</span>Prompt AI</div>
+        <div id="flow-comfy" class="flow-step"><span>3</span>ComfyUI</div>
+        <div id="flow-result" class="flow-step"><span>4</span>이미지 표시</div>
+      </div>
+    </section>
+
+    <section class="history-strip">
+      <div>
+        <p class="eyebrow">Recent</p>
+        <h2>생성 기록</h2>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

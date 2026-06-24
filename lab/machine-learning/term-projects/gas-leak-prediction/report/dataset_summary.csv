@@ -1,0 +1,7 @@
+sensor,csv_count,rows_per_csv,time_start,time_end,value_min_first_file,value_max_first_file
+Accelerometer,1000,3000,0.0,2999.0,0.0,0.1
+Gas_Leak,1000,3000,0.0,2999.0,0.0,1007.0
+Pressure_1,1000,3000,0.0,2999.0,0.001482888,3.25
+Pressure_2,1000,3000,0.0,2999.0,0.001234165,3.25
+Temperature_1,1000,3000,0.0,2999.0,0.075256877,110.0
+Temperature_2,1000,3000,0.0,2999.0,0.0,110.0
