@@ -35,7 +35,7 @@ python src/train_models.py --limit-files 2
 
 기본 dataset은 `lab/datasets/gas-leak-sample/`이다. 전체 센서 폴더를 사용할 때 `GAS_LEAK_DATASET_DIR`를 원본 경로로 지정한다. `--save-processed`는 horizon별 학습용 CSV도 저장한다.
 
-출력은 `models/`의 bundle, `report/metrics.csv`·metrics.json·dataset_summary.csv와 figures, 선택한 `data/processed/`다. 재실행하면 같은 출력 파일을 덮어쓸 수 있다. 이번 문서 작업에서는 기존 실험 결과를 재생성하지 않았다.
+출력은 `models/`의 bundle, `report/metrics.csv`·metrics.json·dataset_summary.csv와 figures, 선택한 `data/processed/`다. 재실행하면 같은 출력 파일을 덮어쓸 수 있다.
 
 ## 결과와 코드
 

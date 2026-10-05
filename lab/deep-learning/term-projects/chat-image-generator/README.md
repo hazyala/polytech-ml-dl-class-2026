@@ -38,4 +38,4 @@ Docker는 저장소 루트에서 `cd lab/docker` 후 `docker compose up --build 
 
 [API 입력·응답](../../../docs/API.md) · [기존 구현 report](report/IMPLEMENTATION.md) · [모델 다운로드 기록](../../../docs/COMFYUI_MODEL_DOWNLOAD.md)
 
-화면은 `templates/`, 브라우저 로직은 `static/js/app.js`, workflow는 `workflows/workflow.json`에 있다. 타임아웃·누락 프롬프트·외부 서비스 실패를 AppError 또는 JSON code/message로 전달한다. 외부 서버 호출 성공이나 배포 상태를 소스 존재만으로 판단하지 않는다.
+화면은 `templates/`, 브라우저 로직은 `static/js/app.js`, workflow는 `workflows/workflow.json`에 있다. 타임아웃·누락 프롬프트·외부 서비스 실패를 AppError 또는 JSON code/message로 전달한다.
