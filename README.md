@@ -1,94 +1,45 @@
-﻿# polytech-ml-dl-class-2026
+# ML/DL 실습과 과제 pipeline
 
-ML/DL 수업 자료, 실습 코드, 과제 산출물을 한 저장소에서 보기 좋게 정리한 작업 공간입니다.
+머신러닝 수업 코드, LLM·ComfyUI 웹 실습, 가스 누출 예측과 대화형 이미지 생성 과제를 모은 저장소.
 
-## 구조
+## 먼저 볼 산출물
 
-- `lab/`: 과제와 텀프로젝트 산출물
-- `machine-learning/class-code/`: 머신러닝 수업 시간 코드와 필기
-- `machine-learning/examples/`: PDF 흐름을 따라 보강한 머신러닝 진입 예제
-- `deep-learning/class-code/`: Docker, Flask API, Local LLM, LangChain, ComfyUI, 시계열 딥러닝 수업 코드
-- `machine-learning/docker/`: 머신러닝 수업용 Docker 구성
-- `deep-learning/docker/`: 딥러닝 수업용 Docker 구성
-- `lab/docker/`: 과제와 텀프로젝트용 Docker 구성
+| 프로젝트 | 구현 |
+|---|---|
+| [가스 누출 예측](lab/machine-learning/term-projects/gas-leak-prediction/README.md) | 센서 CSV 병합·lag feature → StandardScaler → LinearRegression, 시간 horizon별 평가 |
+| [Prompt Canvas](lab/deep-learning/term-projects/chat-image-generator/README.md) | 대화로 이미지 프롬프트 갱신 → ComfyUI workflow 실행 → 결과 이미지 |
+| [Lab 과제](lab/README.md) | LLM GM 게임, 한영 번역 이미지 생성, cookie+SSE 채팅, ML 과제 |
 
-## Lab 과제
+수업 저장소이므로 과제·실험 결과와 서비스 운영 성과를 구분한다. 모델 정확도나 성공률을 새 측정치처럼 요약하지 않고 기존 report와 실제 평가 코드를 연결한다.
 
-과제로 보이는 기존 로컬 산출물은 `lab/` 아래로 모았습니다.
+## 자료 구성
 
-- `lab/deep-learning/assignments/`: DL 과제1, 과제2, 과제3
-- `lab/deep-learning/term-projects/`: DL 텀프로젝트
-- `lab/machine-learning/assignments/`: Iris/Kaggle/유방암 Flask/식인종-선교사 과제
-- `lab/machine-learning/term-projects/`: ML 기초 텀프로젝트
-- `lab/docs/PROJECT_DOCS.md`: 기존 통합 과제 환경 문서
-- `lab/docs/COMFYUI_MODEL_DOWNLOAD.md`: ComfyUI checkpoint 다운로드 위치와 저장 경로
-- `lab/docs/JENA_TIMESERIES_DATA_NOTE.md`: Jena 시계열 데이터셋 다운로드와 Keras 모델 재생성 안내
+- `machine-learning/class-code/`: 날짜별 노트북, 챕터 필기·예제
+- `machine-learning/examples/`: NumPy/Pandas, KNN, 회귀·SVM·PCA, 유전 알고리즘, BFS 진입 예제
+- `deep-learning/class-code/`: Flask, Ollama, LangChain, ComfyUI, 시계열 예제
+- `lab/`: 제출 과제·텀프로젝트·샘플 dataset·기존 보고서
+- 각 영역의 `docker/`: 영역별 Dockerfile·compose·실행 안내
 
-## 수업 코드
+## 작은 예제로 시작
 
-수업 중 작성된 코드와 노트북은 과제 폴더와 섞지 않고 별도로 모았습니다.
+Python 가상환경에서 root 의존성을 설치한다. 별도의 Python runtime lock은 없으므로 각 과제의 고정 requirements와 구분한다.
 
-- `machine-learning/class-code/dated-classes/`: 날짜별 ML 수업 노트북/스크립트
-- `machine-learning/class-code/chapters/`: PDF 챕터 흐름에 맞춘 ML 필기/예제
-- `deep-learning/class-code/docker-flask-basics/`: Docker, WSL, Flask 기본 수업 자료
-- `deep-learning/class-code/flask-api-basic/`: Python API 서버 진입 예제
-- `deep-learning/class-code/local-llm/`: Ollama/Local LLM 예제
-- `deep-learning/class-code/langchain-basic/`: LangChain 기본 체인 예제
-- `deep-learning/class-code/langchain-memory-basic/`: LangChain memory 예제
-- `deep-learning/class-code/comfyui-basic/`: ComfyUI API 예제
-- `deep-learning/class-code/time-series/`: 시계열 딥러닝 노트북/예제
-
-## 예제
-
-PDF 흐름을 따라 바로 실행해볼 수 있는 작은 진입 예제를 추가했습니다.
-
-- `machine-learning/examples/01_numpy_pandas_basics.py`
-- `machine-learning/examples/02_probability_distance_metrics.py`
-- `machine-learning/examples/03_knn_from_scratch.py`
-- `machine-learning/examples/03_classification_clustering_demo.py`
-- `machine-learning/examples/04_regression_svm_pca_demo.py`
-- `machine-learning/examples/05_svm_kernel_demo.py`
-- `machine-learning/examples/06_pca_dimensionality_demo.py`
-- `machine-learning/examples/07_genetic_algorithm_binary.py`
-- `machine-learning/examples/08_cannibals_missionaries_bfs.py`
-- `deep-learning/class-code/docker-flask-basics/docker_command_quickstart.md`
-- `deep-learning/class-code/flask-api-basic/api_server.py`
-- `deep-learning/class-code/comfyui-basic/queue_prompt_demo.py`
-- `deep-learning/class-code/local-llm/ollama_chat_demo.py`
-- `deep-learning/class-code/local-llm/prompting_patterns.py`
-- `deep-learning/class-code/langchain-basic/simple_chain_demo.py`
-- `deep-learning/class-code/langchain-memory-basic/conversation_memory_demo.py`
-- `deep-learning/class-code/langchain-memory-basic/sliding_window_memory_demo.py`
-- `deep-learning/class-code/time-series/windowing_demo.py`
-
-## 빠른 실행
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python machine-learning/examples/03_knn_from_scratch.py
 ```
 
-Lab 앱은 추가 패키지가 필요합니다.
+Windows 활성화는 `.venv\Scripts\Activate.ps1`을 사용한다. root requirements가 모든 Lab의 모델·외부 서버·패키지까지 준비하는 것은 아니다. 웹앱과 텀프로젝트는 해당 README와 requirements를 따른다.
 
-```powershell
-pip install -r lab/requirements.txt
+Docker 실행은 저장소 경로를 기준으로 한다. 기존 개인 PC의 D: 경로를 clone 위치로 가정하지 않는다.
+
+```bash
+cd lab/docker
+docker compose up --build dl3-cookie-sse-chat
 ```
 
-## Docker
+Ollama 서버와 모델은 별도 준비가 필요하다. 각 compose의 host.docker.internal 연결과 포트를 확인한다. [Lab Docker](lab/docker/README.md), [ML Docker](machine-learning/docker/README.md), [DL Docker](deep-learning/docker/README.md)에 기존 환경 기록이 있다.
 
-Docker는 루트에 모으지 않고 각 영역 안의 `docker/` 폴더로 분리했습니다.
-`requirements.txt`는 실행 코드가 있는 폴더에 두고, Dockerfile과 compose 파일만 영역별
-`docker/` 폴더에서 관리합니다.
-
-```powershell
-cd D:\ML_DL_Class\machine-learning\docker
-docker compose up machine-learning
-
-cd D:\ML_DL_Class\deep-learning\docker
-docker compose up flask-api-basic
-
-cd D:\ML_DL_Class\lab\docker
-docker compose up dl1-mc-game
-```
-
+[Lab API](lab/docs/API.md)에는 실제 routing 입력·응답을 정리했다. 단순 Flask 수업 예제는 소스 링크와 함께 별도 목록에 구분했다. 기존 [통합 환경 문서](lab/docs/PROJECT_DOCS.md)는 이전 환경의 보관 기록으로 유지한다.
