@@ -2,8 +2,10 @@
 
 과제와 텀프로젝트 앱을 실행하기 위한 Docker 구성입니다.
 
-```powershell
-cd D:\ML_DL_Class\lab\docker
+저장소 루트에서 실행한다.
+
+```bash
+cd lab/docker
 docker compose up dl1-mc-game
 docker compose up ml-gas-term
 ```

@@ -2,8 +2,10 @@
 
 머신러닝 수업 코드와 예제를 실행하기 위한 Docker 구성입니다.
 
-```powershell
-cd D:\ML_DL_Class\machine-learning\docker
+저장소 루트에서 실행한다.
+
+```bash
+cd machine-learning/docker
 docker compose up machine-learning
 ```
 

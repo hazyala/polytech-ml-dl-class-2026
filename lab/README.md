@@ -4,11 +4,11 @@
 
 | 위치 | 내용 |
 |---|---|
-| `deep-learning/assignments/01-missionaries-cannibals-gm/` | 상태·유효 command·BFS와 LLM 해설을 연결한 게임 |
-| `deep-learning/assignments/02-comfyui-translate-image/` | 한글 설명 번역, ComfyUI workflow, history polling |
-| `deep-learning/assignments/03-cookie-sse-chat/` | session ID cookie, 메모리 history, SSE token 전송 |
+| [01-missionaries-cannibals-gm](deep-learning/assignments/01-missionaries-cannibals-gm/README.md) | 상태·유효 command·BFS와 LLM 해설을 연결한 게임 |
+| [02-comfyui-translate-image](deep-learning/assignments/02-comfyui-translate-image/README.md) | 한글 설명 번역, ComfyUI workflow, history polling |
+| [03-cookie-sse-chat](deep-learning/assignments/03-cookie-sse-chat/README.md) | session ID cookie, 메모리 history, SSE token 전송 |
 | [chat-image-generator](deep-learning/term-projects/chat-image-generator/README.md) | 대화형 이미지 프롬프트와 생성 |
-| `machine-learning/assignments/` | Iris KNN/KMeans/PCA, BFS, Kaggle, Flask 분류 실습 |
+| [machine-learning 과제](machine-learning/assignments/README.md) | Iris KNN/KMeans/PCA, BFS, Kaggle, Flask 분류 실습 |
 | [gas-leak-prediction](machine-learning/term-projects/gas-leak-prediction/README.md) | 센서 lag feature와 horizon별 선형회귀 |
 
 ## 실행 경계
@@ -19,6 +19,6 @@
 
 ## 데이터와 기존 기록
 
-`datasets/gas-leak-sample/`은 여섯 센서의 일부 실험 CSV와 이미지다. 원본 전체 데이터는 Git에 없고 `GAS_LEAK_DATASET_DIR`로 별도 지정한다. 원래 로컬 경로·규모 기록은 [dataset README](datasets/gas-leak-sample/README.md)에 보존했다.
+`datasets/gas-leak-sample/`은 여섯 센서의 일부 실험 CSV와 이미지다. 원본 전체 데이터는 Git에 없고 `GAS_LEAK_DATASET_DIR`로 별도 지정한다. 센서별 파일 구성과 전체 데이터 지정 방법은 [dataset README](datasets/gas-leak-sample/README.md)에 있다.
 
-[PROJECT_DOCS](docs/PROJECT_DOCS.md)는 이전 통합 환경 기록, 각 과제의 report는 제출 당시 설명이다. 현재 실행 조건은 해당 source·requirements·compose를 기준으로 읽는다. breast-cancer Flask는 학습 실험이고 실제 진단 시스템이 아니다.
+[과제별 구현 기록](docs/PROJECT_DOCS.md)과 각 과제의 report에는 모델 연결·처리 흐름·화면이 있다. 개별 앱 README에서 실행을 시작한다. breast-cancer Flask는 학습 실험이고 실제 진단 시스템이 아니다.

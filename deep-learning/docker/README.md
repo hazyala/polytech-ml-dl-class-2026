@@ -2,8 +2,10 @@
 
 딥러닝 수업 코드용 Docker 구성입니다.
 
-```powershell
-cd D:\ML_DL_Class\deep-learning\docker
+저장소 루트에서 실행한다.
+
+```bash
+cd deep-learning/docker
 docker compose up flask-api-basic
 docker compose --profile examples up langchain-basic
 ```

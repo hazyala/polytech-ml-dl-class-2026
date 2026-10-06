@@ -33,7 +33,7 @@ python machine-learning/examples/03_knn_from_scratch.py
 
 Windows 활성화는 `.venv\Scripts\Activate.ps1`을 사용한다. root requirements가 모든 Lab의 모델·외부 서버·패키지까지 준비하는 것은 아니다. 웹앱과 텀프로젝트는 해당 README와 requirements를 따른다.
 
-Docker 실행은 저장소 경로를 기준으로 한다. 기존 개인 PC의 D: 경로를 clone 위치로 가정하지 않는다.
+Docker 실행은 저장소 경로를 기준으로 한다.
 
 ```bash
 cd lab/docker
@@ -42,4 +42,4 @@ docker compose up --build dl3-cookie-sse-chat
 
 Ollama 서버와 모델은 별도 준비가 필요하다. 각 compose의 host.docker.internal 연결과 포트를 확인한다. [Lab Docker](lab/docker/README.md), [ML Docker](machine-learning/docker/README.md), [DL Docker](deep-learning/docker/README.md)에 기존 환경 기록이 있다.
 
-[Lab API](lab/docs/API.md)에는 실제 routing 입력·응답을 정리했다. 단순 Flask 수업 예제는 소스 링크와 함께 별도 목록에 구분했다. 기존 [통합 환경 문서](lab/docs/PROJECT_DOCS.md)는 이전 환경의 보관 기록으로 유지한다.
+[Lab API](lab/docs/API.md)에는 실제 routing 입력·응답을 정리했다. 단순 Flask 수업 예제는 소스 링크와 함께 별도 목록에 구분했다. [과제별 구현 기록](lab/docs/PROJECT_DOCS.md)에는 과제 구성과 코드 설명이 있다.
